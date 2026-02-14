@@ -10550,3 +10550,78 @@ body.athletes-page {
     border-radius: 8px;
     padding: 12px;
 }
+@media (max-width: 768px) {
+
+    .contact-info-box,
+    .contact-form-box {
+        margin-bottom: 20px;
+    }
+
+    .athletes-hero h1 {
+        font-size: 28px;
+    }
+
+    .athletes-hero p {
+        font-size: 14px;
+        padding: 0 15px;
+    }
+ section {
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+    }
+	.map-section iframe {
+        height: 300px;
+    }
+	 .sag-brand img {
+        height: 35px;
+    }
+
+    .sag-brand span {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 991px) {
+
+    
+
+    .navbar-nav {
+        text-align: left;
+    }
+
+    .navbar-nav .nav-link {
+        padding: 10px 0;
+        display: block;
+    }
+
+    .header-btn {
+        margin-top: 10px;
+    }
+}
+@media (max-width: 991px) {
+
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #000;
+        padding: 20px;
+        z-index: 9999;
+    }
+
+    .navbar-nav .nav-link {
+        color: #fff !important;
+        font-size: 18px;
+        padding: 10px 0;
+    }
+
+    .navbar-toggler {
+        border: none;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+}
+
