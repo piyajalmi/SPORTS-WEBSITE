@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="Awaiken">
+	<!-- Page Title -->
+    <title>Sports Authority Of Goa</title>
+	<!-- Favicon Icon -->
+	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+	<!-- Google Fonts Css-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<!-- Bootstrap Css -->
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<!-- SlickNav Css -->
+	<link href="css/slicknav.min.css" rel="stylesheet">
+	<!-- Swiper Css -->
+	<link rel="stylesheet" href="css/swiper-bundle.min.css">
+	<!-- Font Awesome Icon Css-->
+	<link href="css/all.min.css" rel="stylesheet" media="screen">
+	<!-- Animated Css -->
+	<link href="css/animate.css" rel="stylesheet">
+    <!-- Magnific Popup Core Css File -->
+	<link rel="stylesheet" href="css/magnific-popup.css">
+	<!-- Mouse Cursor Css File -->
+	<link rel="stylesheet" href="css/mousecursor.css">
+	<!-- Main Custom Css -->
+	<link href="css/custom.css" rel="stylesheet" media="screen">
+</head>
+<body class="athletes-page">
+  <!-- Header Start -->
+	<header class="main-header">
+		<div class="header-sticky bg-section">
+			<nav class="navbar navbar-expand-lg">
+				<div class="container">
+					<!-- Logo Start -->
+					<a class="navbar-brand sag-brand" href="index.html">
+    <img src="images/logo.png" alt="Logo">
+    <span>Sports Authority of Goa</span>
+</a>
+					<!-- Logo End -->
+
+                    <!-- Main Menu Start -->
+                     <div class="collapse navbar-collapse main-menu">
+                         <div class="nav-menu-wrapper"> 
+                            <ul class="navbar-nav ms-auto me-3" id="menu">
+    <li class="nav-item">
+        <a class="nav-link" href="index.html">Home</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="about.html">About Us</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="athletes.html">Goan Athletes</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="events.html">Events</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="grounds.html">Grounds</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="contact.html">Contact Us</a>
+    </li>
+</ul>
+ </div>
+                        <!-- </div> -->
+                        
+                        <!-- Header Btn Start -->
+                        <div class="header-btn d-flex align-items-center">
+        <div id="google_translate_element"></div>
+                 </div>
+                        <!-- Header Btn End -->
+                   
+					<!-- Main Menu End -->
+					<div class="navbar-toggle"></div>
+				</div>
+			</nav>
+			<div class="responsive-menu"></div>
+		</div>
+	</header>
+
+    <section class="grounds-map-section py-5">
+    <div class="container-fluid">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <div class="grounds-sidebar">
+
+    <h4 class="mb-3">SAG Grounds & Players</h4>
+
+    <!-- Search -->
+    <input type="text" id="searchInput" 
+           class="form-control mb-3" 
+           placeholder="Search ground or player..."
+           onkeyup="searchMap()">
+
+    <!-- Filters -->
+    <div class="filter-buttons mb-4">
+        <button class="btn btn-dark btn-sm me-2" onclick="filterType('all')">All</button>
+        <button class="btn btn-outline-dark btn-sm me-2" onclick="filterType('ground')">Grounds</button>
+        <button class="btn btn-outline-dark btn-sm" onclick="filterType('player')">Players</button>
+    </div>
+
+    <ul id="groundsList" class="list-group"></ul>
+</div>
+
+            </div>
+
+            <!-- Map -->
+            <div class="col-lg-8">
+                <div id="map"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+let map;
+let markers = [];
+let infoWindow;
+
+const locations = [
+
+    // ================= PRIMARY STADIUMS =================
+
+    {
+        id: "fatorda",
+        name: "Pandit Jawaharlal Nehru Stadium (Fatorda)",
+        address: "Fatorda, Margao, South Goa",
+        lat: 15.2993,
+        lng: 73.9539,
+        district: "south",
+        category: "primary",
+        type: "ground"
+    },
+
+    {
+        id: "bambolim_athletic",
+        name: "Athletic Stadium (Bambolim)",
+        address: "Cujira, Bambolim, North Goa",
+        lat: 15.4565,
+        lng: 73.8585,
+        district: "north",
+        category: "primary",
+        type: "ground"
+    },
+
+    {
+        id: "taleigao_indoor",
+        name: "Dr. Shyama Prasad Mukherjee Indoor Stadium",
+        address: "Taleigao, Goa University Campus",
+        lat: 15.4630,
+        lng: 73.8300,
+        district: "north",
+        category: "primary",
+        type: "ground"
+    },
+
+    {
+        id: "peddem",
+        name: "Peddem Sports Complex",
+        address: "Mapusa, North Goa",
+        lat: 15.5895,
+        lng: 73.8130,
+        district: "north",
+        category: "primary",
+        type: "ground"
+    },
+
+    {
+        id: "tilak_maidan",
+        name: "Tilak Maidan Stadium",
+        address: "Vasco, South Goa",
+        lat: 15.3895,
+        lng: 73.8140,
+        district: "south",
+        category: "primary",
+        type: "ground"
+    },
+
+    // ================= SPECIALTY VENUES =================
+
+    {
+        id: "gmc_bambolim",
+        name: "GMC Stadium",
+        address: "Bambolim, North Goa",
+        lat: 15.4560,
+        lng: 73.8590,
+        district: "north",
+        category: "specialty",
+        type: "ground"
+    },
+
+    {
+        id: "margao_indoor",
+        name: "Manohar Parrikar Indoor Stadium",
+        address: "Margao, South Goa",
+        lat: 15.2800,
+        lng: 73.9600,
+        district: "south",
+        category: "specialty",
+        type: "ground"
+    },
+
+    // ================= PLAYERS =================
+
+    {
+        name: "Brahmanand Sankhwalkar",
+        sport: "Football",
+        lat: 15.2998,
+        lng: 73.9545,
+        type: "player",
+        groundId: "fatorda"
+    },
+
+    {
+        name: "Bruno Coutinho",
+        sport: "Football",
+        lat: 15.2985,
+        lng: 73.9525,
+        type: "player",
+        groundId: "fatorda"
+    },
+
+    {
+        name: "Tanisha Crasto",
+        sport: "Badminton",
+        lat: 15.4635,
+        lng: 73.8305,
+        type: "player",
+        groundId: "taleigao_indoor"
+    }
+];
+
+
+
+
+function initMap() {
+
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 9,
+        center: { lat: 15.2993, lng: 74.1240 },
+    });
+
+    infoWindow = new google.maps.InfoWindow();
+
+    loadMarkers(locations);
+    loadSidebar(locations);
+}
+
+function loadMarkers(data) {
+
+    // Remove old markers
+    markers.forEach(marker => marker.setMap(null));
+    markers = [];
+
+    data.forEach(location => {
+
+        const icon = location.type === "ground"
+            ? "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
+            : "https://maps.google.com/mapfiles/ms/icons/blue-dot.png";
+
+        const marker = new google.maps.Marker({
+            position: { lat: location.lat, lng: location.lng },
+            map: map,
+            title: location.name,
+            icon: icon,
+            animation: google.maps.Animation.DROP
+        });
+
+        marker.addListener("click", () => handleClick(location));
+
+        markers.push(marker);
+    });
+}
+
+function searchMap() {
+
+    const input = document.getElementById("searchInput").value.toLowerCase();
+
+    const filtered = locations.filter(loc =>
+        loc.name.toLowerCase().includes(input)
+    );
+
+    loadMarkers(filtered);
+    loadSidebar(filtered);
+}
+function filterType(type) {
+
+    if (type === "all") {
+        loadMarkers(locations);
+        loadSidebar(locations);
+    } else {
+        const filtered = locations.filter(loc => loc.type === type);
+        loadMarkers(filtered);
+        loadSidebar(filtered);
+    }
+}
+
+function loadSidebar(data) {
+
+    const list = document.getElementById("groundsList");
+    list.innerHTML = "";
+
+    data.forEach((location, index) => {
+
+        const li = document.createElement("li");
+        li.className = "list-group-item";
+
+        li.innerHTML = `
+            <strong>${location.name}</strong><br>
+            <small>
+                ${location.address ? location.address : "Sport: " + location.sport}
+            </small>
+        `;
+
+        li.addEventListener("click", () => {
+            handleClick(location);
+        });
+
+        list.appendChild(li);
+    });
+}
+
+
+function filterGrounds(district) {
+
+    if (district === "all") {
+        loadMarkers(locations);
+        loadSidebar(locations);
+    } else {
+        const filtered = locations.filter(g => g.district === district);
+        loadMarkers(filtered);
+        loadSidebar(filtered);
+    }
+}
+function handleClick(location) {
+
+    if (location.type === "ground") {
+
+        const relatedPlayers = locations
+            .filter(loc => loc.type === "player" && loc.groundId === location.id)
+            .map(player => ({
+                ...player,
+                lat: location.lat + (Math.random() * 0.01 - 0.005),
+                lng: location.lng + (Math.random() * 0.01 - 0.005)
+            }));
+
+        loadMarkers([location, ...relatedPlayers]);
+
+        map.setZoom(14);
+        map.setCenter({ lat: location.lat, lng: location.lng });
+
+        infoWindow.setContent(`
+            <div>
+                <h6>${location.name}</h6>
+                <p>${location.address}</p>
+                <p><strong>Total Registered Players:</strong> ${relatedPlayers.length}</p>
+            </div>
+        `);
+
+    } else {
+
+        const relatedGround = locations.find(loc =>
+            loc.type === "ground" && loc.id === location.groundId
+        );
+
+        loadMarkers([relatedGround, location]);
+
+        map.setZoom(14);
+        map.setCenter({ lat: location.lat, lng: location.lng });
+
+        infoWindow.setContent(`
+            <div>
+                <h6>${location.name}</h6>
+                <p>Sport: ${location.sport}</p>
+                <p><strong>Associated Ground:</strong> ${relatedGround.name}</p>
+            </div>
+        `);
+    }
+
+    infoWindow.open(map);
+}
+
+
+</script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq-HSBoA4Y-aJ26Aw6WRN112s_W9uxDCc&callback=initMap">
+</script>
+
+
+
+    <!-- Jquery Library File -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap js file -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Validator js file -->
+    <script src="js/validator.min.js"></script>
+    <!-- SlickNav js file -->
+    <script src="js/jquery.slicknav.js"></script>
+    <!-- Swiper js file -->
+    <script src="js/swiper-bundle.min.js"></script>
+    <!-- Counter js file -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <!-- Magnific js file -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <!-- SmoothScroll -->
+    <script src="js/SmoothScroll.js"></script>
+    <!-- Parallax js -->
+    <script src="js/parallaxie.js"></script>
+    <!-- MagicCursor js file -->
+    <script src="js/gsap.min.js"></script>
+    <script src="js/magiccursor.js"></script>
+    <!-- Text Effect js file -->
+    <script src="js/SplitText.min.js"></script>
+    <script src="js/ScrollTrigger.min.js"></script>
+    <!-- YTPlayer js File -->
+    <script src="js/jquery.mb.YTPlayer.min.js"></script>
+    <!-- Wow js file -->
+    <script src="js/wow.min.js"></script>
+    <!-- Main Custom js file -->
+    <script src="js/function.js"></script>
+</body>
+</html>
